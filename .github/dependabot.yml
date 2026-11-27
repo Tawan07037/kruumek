@@ -1,0 +1,39 @@
+version: 2
+updates:
+  # 1. ตรวจสอบความปลอดภัยของ GitHub Actions (แนะนำให้ใส่ไว้เสมอ)
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Bangkok"
+    cooldown:
+      default-days: 7 # หน่วงเวลา 7 วัน รอให้ชุมชนตรวจสอบเวอร์ชันใหม่ก่อนอัปเดต
+    groups:
+      actions-updates:
+        patterns:
+          - "*"
+
+  # 2. หากโปรเจกต์มีการใช้ npm (เช่น มีไฟล์ package.json) ให้ลบเครื่องหมาย # ด้านหน้าบรรทัดล่างนี้ออก
+  # - package-ecosystem: "npm"
+  #   directory: "/"
+  #   schedule:
+  #     interval: "weekly"
+  #     day: "monday"
+  #     time: "09:30"
+  #     timezone: "Asia/Bangkok"
+  #   cooldown:
+  #     default-days: 7 # ป้องกันมัลแวร์ที่แฝงมากับแพ็กเกจออกใหม่ (Security updates จะไม่ถูกหน่วงเวลา)
+  #     semver-major-days: 14 # เวอร์ชันใหญ่รอ 14 วัน เพื่อความเสถียรและปลอดภัย
+  #   open-pull-requests-limit: 5
+  #   groups:
+  #     security-patches:
+  #       applies-to: security-updates
+  #       patterns:
+  #         - "*"
+  #     minor-and-patch:
+  #       applies-to: version-updates
+  #       update-types:
+  #         - "minor"
+  #         - "patch"
