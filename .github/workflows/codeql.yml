@@ -1,0 +1,49 @@
+name: "CodeQL Advanced Security Scan"
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+    # สแกนอัตโนมัติทุกวันจันทร์ เวลา 09:00 น. (เวลาไทย 02:00 UTC)
+    - cron: '0 2 * * 1'
+
+# จำกัดสิทธิ์ของ Workflow ให้ปลอดภัยที่สุด (หลัก Least Privilege)
+permissions:
+  contents: read
+
+jobs:
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        # ตรวจสอบภาษา JavaScript และ TypeScript (ครอบคลุมโค้ด JS ที่ฝังในไฟล์ HTML ด้วย)
+        language: [ 'javascript-typescript' ]
+        # หากในอนาคตมีใช้ภาษาอื่น เช่น Python ให้เพิ่มเข้าไปใน list ด้านบนได้
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          # ใช้ชุดกฎสแกนระดับสูงสุด ตรวจจับช่องโหว่ที่ซับซ้อนและโค้ดที่ไม่ได้มาตรฐานความปลอดภัย
+          queries: +security-extended,security-and-quality
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{ matrix.language }}"
