@@ -1,0 +1,10 @@
+{
+  "name": "krumek-secure",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "sh build.sh",
+    "check": "node scripts/check.mjs"
+  }
+}
