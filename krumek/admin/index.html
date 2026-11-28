@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>krumek — ผู้ดูแลระบบ</title>
+  <link rel="stylesheet" href="../assets/css/admin.css">
+  <script type="module" src="../assets/js/admin/main.js"></script>
+</head>
+<body>
+  <main class="wrap">
+    <header class="head">
+      <div>
+        <div class="eyebrow">SKT Network · Restricted area</div>
+        <h1>จัดการประกาศเว็บไซต์</h1>
+        <div class="muted">หน้านี้ใช้ Cloudflare Access และสิทธิ์จากฐานข้อมูล</div>
+      </div>
+      <div id="identity" class="status">กำลังตรวจสอบตัวตน…</div>
+    </header>
+
+    <div id="message" role="status" aria-live="polite" class="notice">กำลังเชื่อมต่อระบบ…</div>
+
+    <div id="app" class="hidden">
+      <div class="grid">
+        <section id="formPanel" class="panel">
+          <h2 id="formTitle">สร้างประกาศ</h2>
+          <form id="announcementForm">
+            <input type="hidden" id="announcementId">
+            <div class="field">
+              <label for="title">หัวข้อประกาศ</label>
+              <input id="title" maxlength="180" required>
+            </div>
+            <div class="field">
+              <label for="content">เนื้อหา</label>
+              <textarea id="content" maxlength="10000" required></textarea>
+            </div>
+            <div class="field">
+              <label for="status">สถานะ</label>
+              <select id="status">
+                <option value="draft">Draft — ร่าง</option>
+                <option value="published">Published — เผยแพร่</option>
+              </select>
+            </div>
+            <div class="actions">
+              <button type="submit">บันทึก</button>
+              <button type="button" id="cancelEdit" class="secondary">ล้างแบบฟอร์ม</button>
+            </div>
+          </form>
+          <p class="meta">Editor สร้าง/แก้ Draft ของตนเองได้ ส่วน Publisher/Admin สามารถเผยแพร่ได้ Backend จะตรวจสิทธิ์ทุกครั้ง</p>
+        </section>
+
+        <section class="panel">
+          <div class="row">
+            <h2>ประกาศทั้งหมด</h2>
+            <button id="reload" type="button" class="secondary">รีเฟรช</button>
+          </div>
+          <div id="announcements"><div class="empty">ยังไม่มีข้อมูล</div></div>
+        </section>
+      </div>
+
+      <section id="auditPanel" class="panel">
+        <div class="row">
+          <h2>ประวัติการทำงาน</h2>
+          <button id="reloadAudit" type="button" class="secondary">โหลด Audit Log</button>
+        </div>
+        <div id="audit"><div class="empty">กดโหลดเพื่อดูประวัติ</div></div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
